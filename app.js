@@ -13,7 +13,6 @@ let timerId;
 let outcomeTimerId;
 let currentTime = 20;
 
-
 function moveFrog(e) {
   squares[currentIndex].classList.remove("frog");
 
@@ -35,14 +34,18 @@ function moveFrog(e) {
 }
 
 function autoMoveElements() {
+  currentTime--;
+  timeLeftDisplay.textContent = currentTime;
   logsLeft.forEach((logLeft) => moveLogLeft(logLeft));
   logsRight.forEach((logRight) => moveLogRight(logRight));
   carsLeft.forEach((carLeft) => moveCarLeft(carLeft));
   carsRight.forEach((carRight) => moveCarRight(carRight));
-  lose();
 }
 
-// autoMoveLogs;
+function checkOutComes() {
+  lose();
+  win();
+}
 
 function moveLogLeft(logLeft) {
   switch (true) {
@@ -108,14 +111,6 @@ function moveCarLeft(carLeft) {
       carLeft.classList.remove("c3");
       carLeft.classList.add("c1");
       break;
-    case carLeft.classList.contains("c1"):
-      carLeft.classList.remove("c1");
-      carLeft.classList.add("c2");
-      break;
-    case carLeft.classList.contains("c2"):
-      carLeft.classList.remove("c2");
-      carLeft.classList.add("c3");
-      break;
   }
 }
 
@@ -132,14 +127,6 @@ function moveCarRight(carRight) {
     case carRight.classList.contains("c3"):
       carRight.classList.remove("c3");
       carRight.classList.add("c2");
-      break;
-    case carRight.classList.contains("c1"):
-      carRight.classList.remove("c1");
-      carRight.classList.add("c3");
-      break;
-    case carRight.classList.contains("c2"):
-      carRight.classList.remove("c2");
-      carRight.classList.add("c1");
       break;
   }
 }
@@ -166,11 +153,6 @@ function win() {
     clearInterval(outcomeTimerId);
     document.removeEventListener("keyup", moveFrog);
   }
-}
-
-function checkOutComes() {
-  lose();
-  win();
 }
 
 startPauseButton.addEventListener("click", () => {
